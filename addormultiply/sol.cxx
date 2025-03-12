@@ -6,8 +6,6 @@ using namespace std;
 
 typedef long long ll;
 
-char numbers[MAX_N];
-bool is_multiply[MAX_N];
 int segtree[4*MAX_N];
 set<pair<int,int>> bst;
 set<pair<int,int>> bst_flip;
@@ -17,7 +15,7 @@ ll expression_flip_prev;
 // https://cp-algorithms.com/data_structures/segment_tree.html#implementation
 // ( should probably print this out if you're going to ICPC )
 
-void build_segtree(char a[], int v, int tl, int tr) {
+void build_segtree(string &a, int v, int tl, int tr) {
     if (tl == tr) {
         segtree[v] = a[tl];
     } else {
@@ -61,17 +59,14 @@ void update_segtree(int v, int tl, int tr, int pos, int new_val) {
     }
 }
 
-void parse_input_expression(string& input_expression) {
-    numbers[0] = input_expression[0] - 0x30;
-    for (int i = 0; i < MAX_N-1; i++) {
-        is_multiply[i] = (input_expression[(2*i)+1] == '*')? true : false;
-        numbers[i+1] = input_expression[(2*i)+2] - 0x30;
-    }
+pair<int,int> parse_range(int& i) {
+    
 }
 
 void init_bst() {
-    for (int i = 0; i < MAX_N; i++) {
-        
+    int i = 0;
+    while (i < MAX_N) {
+        bst.insert(parse_range(i));
     }
 }
 
@@ -79,9 +74,8 @@ int main() {
     // get inputs
     size_t N, M; cin >> N >> M;
     string input_expression; cin >> input_expression;
-    parse_input_expression(input_expression);
     // initialize data structures
-    build_segtree(numbers,1,0,MAX_N-1);
+    build_segtree(input_expression,1,0,input_expression.length());
     bst = set<pair<int,int>>();
     bst_flip = set<pair<int,int>>();
     
